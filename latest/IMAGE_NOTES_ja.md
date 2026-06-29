@@ -42,6 +42,25 @@
 | 環境変数 | `ANDROID_SDK_ROOT` / `ANDROID_HOME` / `PATH` は `ENTRYPOINT` で上書きされる |
 | 既定AVD | `dev` をビルド時に作成 |
 
+## iOS向けイメージ（`Dockerfile.ios`）
+
+### 構成の比較
+
+| 項目 | Webイメージ | iOSイメージ |
+| --- | --- | --- |
+| Flutter SDK | 含む | 含む |
+| Webサポート | ビルド引数で有効化 | ビルド引数で有効化 |
+| iOSサポート | 含まない | 含む |
+| Xcode | 含まない | 含まない |
+| 主な用途 | Flutter Web開発 | Flutter Web開発 + iOS向けFlutterアーティファクトの準備 |
+
+### 実行時の挙動
+
+| 項目 | 内容 |
+| --- | --- |
+| iOS関連のFlutterアーティファクト | `flutter precache --ios` で事前取得する |
+| ビルド/署名 | Ubuntuコンテナでは完結しない。実機ビルドや署名はXcodeを持つmacOS環境が必要 |
+
 ## 内包パッケージ（詳細）
 
 ### Webイメージ（`Dockerfile`）
@@ -100,3 +119,4 @@
 - Rootless実行を前提にしています（Podman想定）。
 - エミュレータのHWアクセラレーションはホスト依存です（KVMが必要）。
 - 実端末USB直結はホスト依存が強いので、基本は「ホストadb＋無線デバッグ（TCP）」運用を推奨します。
+- iOSの実機ビルドや署名は、このLinuxコンテナだけでは完結しません。Xcodeを持つmacOS側の環境が別途必要です。

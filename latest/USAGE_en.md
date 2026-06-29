@@ -89,6 +89,26 @@ Note:
 
 - The Android SDK is initialized from `/opt/android-sdk.dist` into `$HOME/.cache/android-sdk` at startup. If you persist `HOME`, the cache will persist too.
 
+## Web + iOS (Preparing the Flutter SDK)
+
+This repository also includes `Dockerfile.ios` as a derivative image for **iOS + Web** in addition to the lightweight Web image.
+
+- Web image: `Dockerfile`
+- Web + iOS image: `Dockerfile.ios`
+
+The basic rule is to choose which one to `FROM` in the downstream project.
+
+### Usage Hint
+
+```bash
+podman compose -f docker-compose.ios.yml up --build
+```
+
+Note:
+
+- On Ubuntu containers, you can prepare Flutter artifacts for iOS, but **actual iOS device builds and signing require a macOS environment with Xcode**.
+- This image is intended to prepare a Flutter SDK for iOS + Web workflows.
+
 ## Verifying on a Physical Android Device Without Adding More docker/compose Complexity
 
 Direct USB wiring into the container (`/dev/bus/usb` / `privileged`) is highly host-dependent, so for physical devices it is lighter to rely on **host `adb` plus wireless debugging over TCP**.

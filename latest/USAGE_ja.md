@@ -89,6 +89,26 @@ emulator -avd dev -no-window -gpu swiftshader_indirect
 
 - Android SDKは起動時に `/opt/android-sdk.dist` から **`$HOME/.cache/android-sdk` に初期化**されます（`HOME` を永続化していればキャッシュも残ります）。
 
+## Web + iOS（Flutter SDKの準備）
+
+このリポジトリには、Web向けの軽量イメージとは別に **iOS + Web向け**の派生として `Dockerfile.ios` が入っています。
+
+- Web向け: `Dockerfile`
+- Web + iOS向け: `Dockerfile.ios`
+
+下流プロジェクトで「どちらを `FROM` するか」を分けるのが基本です。
+
+### 使い方の目安
+
+```bash
+podman compose -f docker-compose.ios.yml up --build
+```
+
+注意:
+
+- Ubuntuコンテナ上では、iOS向けのFlutterアーティファクト準備はできますが、**Xcodeが必要な実機ビルドや署名はmacOS環境が前提**です。
+- このイメージは「iOS + Web向けにFlutter SDKを整える」用途です。
+
 ## Android実端末で検証する（docker/composeを増やさない運用）
 
 USBをコンテナに直結する運用（`/dev/bus/usb` / `privileged`）はホスト依存が強いため、実端末は **ホストの `adb` ＋無線デバッグ（TCP）**に寄せるのが軽いです。

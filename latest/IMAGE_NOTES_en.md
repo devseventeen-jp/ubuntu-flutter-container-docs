@@ -42,6 +42,25 @@ For the “pull/FROM and use it” workflow, see `USAGE_en.md`. For build and ma
 | Environment variables | `ANDROID_SDK_ROOT`, `ANDROID_HOME`, and `PATH` are overwritten by `ENTRYPOINT` |
 | Default AVD | `dev` is created during the build |
 
+## iOS Image (`Dockerfile.ios`)
+
+### Component Overview
+
+| Area | Web image | iOS image |
+| --- | --- | --- |
+| Flutter SDK | Included | Included |
+| Web support | Enabled through build arguments | Enabled through build arguments |
+| iOS support | Not included | Included |
+| Xcode | Not included | Not included |
+| Typical use case | Flutter web development | Flutter web development plus preparation of Flutter artifacts for iOS |
+
+### Runtime Behavior
+
+| Item | Behavior |
+| --- | --- |
+| iOS Flutter artifacts | Pre-fetched with `flutter precache --ios` |
+| Build/signing | Not complete on Ubuntu containers; actual iOS device builds and signing require a macOS environment with Xcode |
+
 ## Included Packages
 
 ### Web Image (`Dockerfile`)
@@ -100,3 +119,4 @@ For the “pull/FROM and use it” workflow, see `USAGE_en.md`. For build and ma
 - Rootless execution is assumed, with Podman in mind.
 - Emulator hardware acceleration depends on the host and requires KVM.
 - Direct USB access to a real device is highly host-dependent, so the recommended approach is to use the host `adb` plus wireless debugging over TCP.
+- iOS device builds and signing cannot be completed inside this Linux container alone; a macOS environment with Xcode is required.
