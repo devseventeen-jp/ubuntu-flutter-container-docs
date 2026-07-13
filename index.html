@@ -1,12 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Documentation</title>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; line-height: 1.6; }
+    details { border: 1px solid #ddd; border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 0.75rem; }
+    summary { cursor: pointer; font-weight: 600; }
+    ul { margin: 0.5rem 0 0 1rem; }
+    a { color: #0366d6; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
 <body>
-<h1>Documentation</h1>
-<ul>
-  <li><a href="latest/">latest</a></li>
-  <li><a href="v0.0.0.11/">v0.0.0.11</a></li>
-  <li><a href="v0.0.0.12/">v0.0.0.12</a></li>
-  <li><a href="v0.0.0.12/">v0.0.0.12</a></li>
-</ul>
+  <h1>Documentation</h1>
+  <div id="versions"></div>
+
+  <script>
+    async function loadVersions() {
+      const container = document.getElementById('versions');
+
+      try {
+        const response = await fetch('./versions.json');
+        if (!response.ok) {
+          throw new Error('Failed to load versions.json');
+        }
+
+        const versions = await response.json();
+        if (!Array.isArray(versions) || versions.length === 0) {
+          container.innerHTML = '<p>No documentation versions found.</p>';
+          return;
+        }
+
+        const fragment = document.createDocumentFragment();
+
+        versions.forEach(({ tag, files }) => {
+          const details = document.createElement('details');
+          const summary = document.createElement('summary');
+          const list = document.createElement('ul');
+
+          summary.textContent = tag;
+          details.appendChild(summary);
+
+          if (files.length === 0) {
+            const item = document.createElement('li');
+            item.textContent = 'No files found.';
+            list.appendChild(item);
+          } else {
+            files.forEach((file) => {
+              const item = document.createElement('li');
+              const link = document.createElement('a');
+              link.href = `./${tag}/${file}`;
+              link.textContent = file;
+              item.appendChild(link);
+              list.appendChild(item);
+            });
+          }
+
+          details.appendChild(list);
+          fragment.appendChild(details);
+        });
+
+        container.appendChild(fragment);
+      } catch (error) {
+        container.innerHTML = '<p>Unable to load documentation index.</p>';
+      }
+    }
+
+    loadVersions();
+  </script>
 </body>
 </html>
