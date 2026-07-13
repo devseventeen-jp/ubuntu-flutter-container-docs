@@ -1,0 +1,41 @@
+[
+  {
+    "tag": "latest",
+    "files": [
+      "IMAGE_NOTES_en.md",
+      "IMAGE_NOTES_ja.md",
+      "USAGE_en.md",
+      "USAGE_ja.md",
+      "index.html"
+    ]
+  },
+  {
+    "tag": "v0.0.0.11",
+    "files": [
+      "IMAGE_NOTES_en.md",
+      "IMAGE_NOTES_ja.md",
+      "USAGE_en.md",
+      "USAGE_ja.md",
+      "index.html"
+    ]
+  },
+  {
+    "tag": "v0.0.0.12",
+    "files": [
+      "IMAGE_NOTES_en.md",
+      "IMAGE_NOTES_ja.md",
+      "USAGE_en.md",
+      "USAGE_ja.md",
+      "index.html"
+    ]
+  },
+  {
+    "tag": "v0.9",
+    "files": [
+      "IMAGE_NOTES_en.md",
+      "IMAGE_NOTES_ja.md",
+      "USAGE_en.md",
+      "USAGE_ja.md"
+    ]
+  }
+]
